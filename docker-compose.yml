@@ -1,0 +1,9 @@
+services:
+  app:
+    working_dir: /app
+    container_name: goapp
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8081:8080"
