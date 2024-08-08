@@ -1,9 +1,24 @@
 services:
   app:
     working_dir: /app
-    container_name: goapp
-    build: .
+    container_name: authservice-container
+    build:
+      context: server
+      dockerfile: Dockerfile
     volumes:
-      - .:/app
+      - ./server:/app
     ports:
       - "8081:8080"
+    entrypoint: docker/entrypoint.sh
+
+  db:
+    container_name: authservice-db
+    image: postgres:12
+    environment:
+      POSTGRES_USER: authservice-user
+      POSTGRES_PASSWORD: authservice-password
+      POSTGRES_DB: authservice-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db:/var/lib/postgresql/data
